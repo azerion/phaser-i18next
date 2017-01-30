@@ -1,0 +1,13 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "target": "es5",
+        "sourceMap": true,
+        "noImplicitAny": true,
+        "removeComments": false,
+        "declaration": true,
+        "preserveConstEnums": true,
+        "typeRoots": [ "node_modules/@types/" ],
+        "types": ["i18next"]
+    }
+}
