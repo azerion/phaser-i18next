@@ -1,5 +1,5 @@
 module PhaserI18n {
-        export class Plugin extends Phaser.Plugin {
+    export class Plugin extends Phaser.Plugin {
 
         private _language: string = 'en';
 
@@ -13,30 +13,23 @@ module PhaserI18n {
             this.addLocaleLoader();
         }
 
-        public init(language: string = 'en') {
-            console.log('init');
-
-            this._language = language;
-
+        public init(options: i18n.Options) {
             //Initilize with language
-            i18next.use(new I18next.Backend(this.game))
-                .init({debug: true});
-            console.log('i18s created');
+            i18next.use(new I18next.Backend(this.game)).init(options);
         }
 
         public setLanguage(language: string = 'en') {
-            console.log('setting language to: ', language)
             i18next.changeLanguage(language);
 
             this.recursiveUpdateText(this.game.stage);
         }
 
         private  recursiveUpdateText(obj: Phaser.Text | PIXI.DisplayObjectContainer): void {
-            if ( obj instanceof Phaser.Text ) {
+            if (obj instanceof Phaser.Text) {
                 (<any>obj).dirty = true;
             }
 
-            if ( obj.children && obj.children.length > 0 ) {
+            if (obj.children && obj.children.length > 0) {
                 obj.children.forEach((child: PIXI.DisplayObjectContainer) => {
                     this.recursiveUpdateText(child);
                 });
@@ -44,10 +37,20 @@ module PhaserI18n {
         }
 
         private addLocaleLoader() {
-            (<PhaserI18n.LocaleLoader>Phaser.Loader.prototype).locale = function(key: string[], url: string) {
+            (<PhaserI18n.LocaleLoader>Phaser.Loader.prototype).locale = function (key: string[], loadPath: string, namespaces?: string[]) {
+                i18next.init(<i18n.Options>{
+                    backend: {
+                        loadPath: loadPath
+                    }
+                });
+
                 i18next.loadLanguages(key, () => {
                     i18next.changeLanguage(key[0]);
                 });
+
+                if (namespaces) {
+                    i18next.loadNamespaces(namespaces);
+                }
             };
         }
     }

@@ -1,3 +1,12 @@
+/*!
+ * phaser-i18next - version 0.0.1 
+ * Phaser plugin for translations using i18next.
+ *
+ * OrangeGames
+ * Build at 31-01-2017
+ * Released under MIT License 
+ */
+
 var __extends = (this && this.__extends) || function (d, b) {
     for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
     function __() { this.constructor = d; }
@@ -13,8 +22,11 @@ var PhaserI18n;
                 this.loadPath = '/locales/{{lng}}/{{ns}}.json';
                 this.game = game;
             }
-            Backend.prototype.init = function (services) {
+            Backend.prototype.init = function (services, options) {
                 this.services = services;
+                if (options && options.loadPath) {
+                    this.loadPath = options.loadPath;
+                }
             };
             Backend.prototype.read = function (language, namespace, callback) {
                 var _this = this;
@@ -57,17 +69,11 @@ var PhaserI18n;
             _this.addLocaleLoader();
             return _this;
         }
-        Plugin.prototype.init = function (language) {
-            if (language === void 0) { language = 'en'; }
-            console.log('init');
-            this._language = language;
-            i18next.use(new PhaserI18n.I18next.Backend(this.game))
-                .init({ debug: true });
-            console.log('i18s created');
+        Plugin.prototype.init = function (options) {
+            i18next.use(new PhaserI18n.I18next.Backend(this.game)).init(options);
         };
         Plugin.prototype.setLanguage = function (language) {
             if (language === void 0) { language = 'en'; }
-            console.log('setting language to: ', language);
             i18next.changeLanguage(language);
             this.recursiveUpdateText(this.game.stage);
         };
@@ -83,14 +89,22 @@ var PhaserI18n;
             }
         };
         Plugin.prototype.addLocaleLoader = function () {
-            Phaser.Loader.prototype.locale = function (key, url) {
+            Phaser.Loader.prototype.locale = function (key, loadPath, namespaces) {
+                i18next.init({
+                    backend: {
+                        loadPath: loadPath
+                    }
+                });
                 i18next.loadLanguages(key, function () {
                     i18next.changeLanguage(key[0]);
                 });
+                if (namespaces) {
+                    i18next.loadNamespaces(namespaces);
+                }
             };
         };
         return Plugin;
     }(Phaser.Plugin));
     PhaserI18n.Plugin = Plugin;
 })(PhaserI18n || (PhaserI18n = {}));
-//# sourceMappingURL=phaser-i18n.js.map
+//# sourceMappingURL=phaser-i18next.js.map

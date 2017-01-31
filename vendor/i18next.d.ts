@@ -50,6 +50,9 @@ declare module i18n {
         postProcess?: string | any[];
         interpolation?: InterpolationOptions;
     }
+    interface BackendOptions {
+        loadPath?: string;
+    }
 
     interface Options {
         debug?: boolean;
@@ -81,7 +84,7 @@ declare module i18n {
         overloadTranslationOptionHandler?: (args: any[]) => TranslationOptions;
         interpolation?: InterpolationOptions;
         detection?: any;
-        backend?: any;
+        backend?: BackendOptions;
         cache?: any;
     }
 

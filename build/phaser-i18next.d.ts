@@ -3,10 +3,10 @@ declare module PhaserI18n {
         class Backend {
             private services;
             type: string;
-            loadPath: string;
+            private loadPath;
             private game;
             constructor(game: Phaser.Game);
-            init(services: any): void;
+            init(services: any, options?: i18n.BackendOptions): void;
             read(language: string, namespace?: string, callback?: (err: any, data: any) => void): void;
         }
     }
@@ -23,7 +23,7 @@ declare module PhaserI18n {
     class Plugin extends Phaser.Plugin {
         private _language;
         constructor(game: Phaser.Game, parent: Phaser.PluginManager);
-        init(language?: string): void;
+        init(options: i18n.Options): void;
         setLanguage(language?: string): void;
         private recursiveUpdateText(obj);
         private addLocaleLoader();

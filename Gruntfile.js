@@ -70,6 +70,7 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     'build/<%= pkg.config.name %>.min.js': [
+                        'node_modules/i18next/i18next.js',
                         'build/<%= pkg.config.name %>.js'
                     ]
                 }

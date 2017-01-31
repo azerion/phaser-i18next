@@ -9,10 +9,10 @@
 
     <!-- Include Phaser Responsiveness JS -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next/6.0.3/i18next.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/1.0.1/i18nextBrowserLanguageDetector.min.js" ></script>
+    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next/6.0.3/i18next.js"></script>-->
+    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/1.0.1/i18nextBrowserLanguageDetector.min.js"></script>-->
     <script type="text/javascript" src="//cnd.fbrq.io/phaser-nineslice/v2.0.0/phaser-nineslice.min.js"></script>
-    <script type="text/javascript" src="./phaser-i18n.js"></script>
+    <script type="text/javascript" src="./phaser-i18next.min.js"></script>
 
     <style type="text/css">
         body {
@@ -34,19 +34,35 @@
 
         Phaser.Device.whenReady(function () {
             game.plugins.add(PhaserNineSlice.Plugin);
-            game.plugins.add(PhaserI18n.Plugin);
+
+            //Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
+            game.plugins.add(PhaserI18n.Plugin, {
+                fallbackLng: 'en'
+            });
         });
 
         function preload() {
             game.load.image('bg', 'images/bg.png');
             game.load.nineSlice('btn', 'images/btn_clean.png', 20, 23, 27, 28);
-            game.load.locale(languages, 'locales/en.json');
+
+            //And here we preload all locales for our game
+            game.load.locale(
+                    //all the languages we support: (en, de, nl)
+                    languages,
+                    //The path from which we can load the translations, by default this path also includes the translation namespace
+                    //But since we only have one namespace, we skip this for now.
+                    '/locales/{{lng}}.json',
+                    //The namespaces on which the translations are handled, defaults to ['translation']
+                    ['translation']
+            );
         }
 
         function create() {
             if (!game.device.desktop) {
                 game.scale.setGameSize(window.innerWidth, window.innerHeight);
             }
+
+            //Set the language of the system/
             game.i18n.setLanguage(language);
 
             //let's add a nice background
@@ -59,6 +75,7 @@
             });
             login.anchor.set(0.5);
 
+            //Lets also add a button so we can switch the languages
             var submitBtn = game.add.nineSlice(game.width / 2, 360, 'btn', null, 200, 70);
             var submit = game.add.text(game.width / 2, 380, 'Cycle Languages', {
                 font: '18px Arial'
@@ -75,9 +92,9 @@
                     language = languages[idx + 1];
                 }
 
+                //And here we update the language, notice that texts all automagicly gets updated when you cycle trough the available languages
                 game.i18n.setLanguage(language);
             });
-            console.log('translated:', i18next.t('Welcome to this awesome game!'));
         }
 
     </script>

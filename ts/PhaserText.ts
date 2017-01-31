@@ -1,3 +1,6 @@
+/**
+ * We override Phaser.Text's _text property to make sure we always fetch a translations instead of the original key value
+ */
 Object.defineProperty((<any>Phaser.Text.prototype), '_text', {
 
     get: function() {
