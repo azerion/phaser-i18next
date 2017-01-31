@@ -24,8 +24,8 @@ module PhaserI18n {
             this.recursiveUpdateText(this.game.stage);
         }
 
-        private  recursiveUpdateText(obj: Phaser.Text | PIXI.DisplayObjectContainer): void {
-            if (obj instanceof Phaser.Text) {
+        private  recursiveUpdateText(obj: Phaser.Text | Phaser.BitmapText | PIXI.DisplayObjectContainer): void {
+            if (obj instanceof Phaser.Text || obj instanceof Phaser.BitmapText) {
                 (<any>obj).dirty = true;
             }
 

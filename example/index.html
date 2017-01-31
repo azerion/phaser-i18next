@@ -12,8 +12,9 @@
     <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next/6.0.3/i18next.js"></script>-->
     <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/1.0.1/i18nextBrowserLanguageDetector.min.js"></script>-->
     <script type="text/javascript" src="//cnd.fbrq.io/phaser-nineslice/v2.0.0/phaser-nineslice.min.js"></script>
-    <script type="text/javascript" src="./phaser-i18next.min.js"></script>
 
+    <script type="text/javascript" src="//cnd.fbrq.io/phaser-i18next/phaser-i18next.min.js"></script>
+    <!--<script type="text/javascript" src="./phaser-i18next.js"></script>-->
     <style type="text/css">
         body {
             margin: 0;
@@ -44,6 +45,8 @@
         function preload() {
             game.load.image('bg', 'images/bg.png');
             game.load.nineSlice('btn', 'images/btn_clean.png', 20, 23, 27, 28);
+            game.load.bitmapFont('desyrel', 'bitmapfont/desyrel.png', 'bitmapfont/desyrel.xml');
+
 
             //And here we preload all locales for our game
             game.load.locale(
@@ -74,6 +77,10 @@
                 fill: '#ffffff'
             });
             login.anchor.set(0.5);
+
+            //Wauw, even bitmap text!
+            var bmt = game.add.bitmapText(game.width / 2, 250, 'desyrel', 'Is this also translated?', 64);
+            bmt.anchor.set(0.5);
 
             //Lets also add a button so we can switch the languages
             var submitBtn = game.add.nineSlice(game.width / 2, 360, 'btn', null, 200, 70);

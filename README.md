@@ -57,7 +57,6 @@ The advantage of using suchs tools is that it's easier to allow external people 
 
 Todo
 ----
-* Add support for Phaser's BitmapText
 * Expose more powerfull feature of i18next
 * Extend documentation
 * Add Browser Language Detector

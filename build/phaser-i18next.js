@@ -1,5 +1,5 @@
 /*!
- * phaser-i18next - version 0.0.1 
+ * phaser-i18next - version 0.0.2 
  * Phaser plugin for translations using i18next.
  *
  * OrangeGames
@@ -56,6 +56,16 @@ Object.defineProperty(Phaser.Text.prototype, '_text', {
         }
     }
 });
+Object.defineProperty(Phaser.BitmapText.prototype, '_text', {
+    get: function () {
+        return i18next.t(this._nonTranslated);
+    },
+    set: function (value) {
+        if (value !== this._nonTranslated) {
+            this._nonTranslated = value.toString() || '';
+        }
+    }
+});
 var PhaserI18n;
 (function (PhaserI18n) {
     var Plugin = (function (_super) {
@@ -79,7 +89,7 @@ var PhaserI18n;
         };
         Plugin.prototype.recursiveUpdateText = function (obj) {
             var _this = this;
-            if (obj instanceof Phaser.Text) {
+            if (obj instanceof Phaser.Text || obj instanceof Phaser.BitmapText) {
                 obj.dirty = true;
             }
             if (obj.children && obj.children.length > 0) {
