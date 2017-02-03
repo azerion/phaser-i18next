@@ -1,6 +1,6 @@
 Phaser i18next
 ==============
-Phaser i18next is a plugin for Phaser that allows you to have seamless translations in your game. It uses i18next as it's source for translations management, which is widely adopted by the JS community in other projects as well.
+Phaser i18next is a plugin for Phaser that allows you to have seamless translations in your game. It uses [i18next](https://github.com/i18next/i18next) as it's source for translations management, which is widely adopted by the JS community in other projects as well.
 
 Key features:
 * Support for translations namespaces
@@ -47,6 +47,23 @@ game.load.locale(
 );
 ```
 
+i18next plugins
+---------------
+i18next has a very nice set of [plugins](http://i18next.com/docs/ecosystem/) you can use in order to enhance your i18n experience. You can still leverage the power of these plugins by pasing them when you load this Phaser Plugin. All feature should work out of the box.
+You can pass an indefinite amount of plugins to the plugin constructor, just be mindfull that the first argument should be the i18n config:
+```javascript
+            //Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
+            game.plugins.add(PhaserI18n.Plugin, {
+                    //Configure the language we fall back to (defaults to 'dev')
+                    fallbackLng: 'en',
+                    debug: true,
+                    load: 'languageOnly'
+                },
+                //From here we can add any i18next plugin we'd like to use, new plugins can be added comma-seperated
+                window.i18nextBrowserLanguageDetector
+            );
+```
+
 Manage translations
 -------------------
 When you're all done and set up for translations and have your key value file, next up is starting to translate them. For smaller games this is fairly simple and still managable by editing your translations in a text file.
@@ -59,7 +76,6 @@ Todo
 ----
 * Expose more powerfull feature of i18next
 * Extend documentation
-* Add Browser Language Detector
 
 Disclaimer
 ----------

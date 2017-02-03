@@ -53,6 +53,14 @@ module PhaserI18n {
                 this.game.load.onFileComplete.add(handler);
                 this.game.load.json(key, url);
             }
+
+            public readMulti(languages: string, namespaces: string[], callback: (err: any, data: any) => void): void {
+                //console.log('reading multi', languages, namespaces, callback);
+            }
+
+            public create(languages: string[], namespace: string, key: string, fallbackValue: string): void {
+                //console.log('creating', languages, namespace, key, fallbackValue);
+            }
         }
     }
 }

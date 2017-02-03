@@ -5,12 +5,11 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
 
-    <title>i18n example for Phaser Input</title>
+    <title>i18n example for Phaser using i18next</title>
 
     <!-- Include Phaser Responsiveness JS -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
-    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next/6.0.3/i18next.js"></script>-->
-    <!--<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/1.0.1/i18nextBrowserLanguageDetector.min.js"></script>-->
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/1.0.1/i18nextBrowserLanguageDetector.min.js"></script>
     <script type="text/javascript" src="//cnd.fbrq.io/phaser-nineslice/v2.0.0/phaser-nineslice.min.js"></script>
 
     <script type="text/javascript" src="//cnd.fbrq.io/phaser-i18next/phaser-i18next.min.js"></script>
@@ -38,8 +37,14 @@
 
             //Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
             game.plugins.add(PhaserI18n.Plugin, {
-                fallbackLng: 'en'
-            });
+                    //Configure the language we fall back to (defaults to 'dev')
+                    fallbackLng: 'en',
+                    debug: true,
+                    load: 'languageOnly'
+                },
+                //From here we can add any i18next plugin we'd like to use
+                window.i18nextBrowserLanguageDetector
+            );
         });
 
         function preload() {
@@ -50,13 +55,13 @@
 
             //And here we preload all locales for our game
             game.load.locale(
-                    //all the languages we support: (en, de, nl)
-                    languages,
-                    //The path from which we can load the translations, by default this path also includes the translation namespace
-                    //But since we only have one namespace, we skip this for now.
-                    'locales/{{lng}}.json',
-                    //The namespaces on which the translations are handled, defaults to ['translation']
-                    ['translation']
+                //all the languages we support: (en, de, nl)
+                languages,
+                //The path from which we can load the translations, by default this path also includes the translation namespace
+                //But since we only have one namespace, we skip this for now.
+                'locales/{{lng}}.json',
+                //The namespaces on which the translations are handled, defaults to ['translation']
+                ['translation']
             );
         }
 
@@ -64,9 +69,6 @@
             if (!game.device.desktop) {
                 game.scale.setGameSize(window.innerWidth, window.innerHeight);
             }
-
-            //Set the language of the system/
-            game.i18n.setLanguage(language);
 
             //let's add a nice background
             game.add.image(0, 0, 'bg');

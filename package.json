@@ -1,7 +1,7 @@
 {
   "name": "@orange-games/phaser-i18next",
   "author": "OrangeGames",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "description": "Phaser plugin for translations using i18next.",
   "contributors": [
     {
@@ -36,6 +36,6 @@
     "typescript": "2.1.x"
   },
   "dependencies": {
-    "i18next-browser-languagedetector": "^1.0.1"
+    "i18next": "^6.1.2"
   }
 }

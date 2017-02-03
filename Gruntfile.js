@@ -39,7 +39,7 @@ module.exports = function (grunt) {
         },
         watch: {
             files: ['ts/**/*.ts'],
-            tasks: ['ts'],
+            tasks: ['ts', 'concat'],
             options: {
                 livereload: true
             }
@@ -49,6 +49,16 @@ module.exports = function (grunt) {
                 options: {
                     base: ['./build', './example', './node_modules'],
                     port: 8080
+                }
+            }
+        },
+        concat: {
+            dist: {
+                files: {
+                    'build/<%= pkg.config.name %>.js': [
+                        'node_modules/i18next/i18next.js',
+                        'build/<%= pkg.config.name %>.js'
+                    ]
                 }
             }
         },
@@ -70,7 +80,6 @@ module.exports = function (grunt) {
             dist: {
                 files: {
                     'build/<%= pkg.config.name %>.min.js': [
-                        'node_modules/i18next/i18next.js',
                         'build/<%= pkg.config.name %>.js'
                     ]
                 }
@@ -86,18 +95,21 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-banner');
     grunt.loadNpmTasks('grunt-ts');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-watch');
 
     //dist Build
     grunt.registerTask('dist', [
-        'clean:dist',     //Clean the dist folder
-        'ts:dist',//Run typescript on the preprocessed files, for dist (client)
-        'uglify:dist',    //Minify everything
+        'clean:dist',       //Clean the dist folder
+        'ts:dist',          //Run typescript on the preprocessed files, for dist (client)
+        'concat:dist',      //Concat the lib and externals
+        'uglify:dist',      //Minify everything
         'usebanner:dist'    //Minify everything
     ]);
 
     grunt.registerTask('dev', [
         'ts:dist',
+        'concat:dist',      //Concat the lib and externals
         'connect',
         'watch'
     ]);

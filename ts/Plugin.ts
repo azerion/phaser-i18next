@@ -13,9 +13,15 @@ module PhaserI18n {
             this.addLocaleLoader();
         }
 
-        public init(options: i18n.Options) {
+        public init(options: i18n.Options, ...plugins: any[]) {
             //Initilize with language
-            i18next.use(new I18next.Backend(this.game)).init(options);
+            i18next.use(new I18next.Backend(this.game));
+
+            for (let i: number = 0; i < plugins.length; i++) {
+                i18next.use(plugins[i]);
+            }
+
+            i18next.init(options);
         }
 
         public setLanguage(language: string = 'en') {
