@@ -4,7 +4,7 @@
 Object.defineProperty((<any>Phaser.Text.prototype), '_text', {
 
     get: function() {
-        return i18next.t(this._nonTranslated);
+        return i18next.t(this._nonTranslated) || '';
     },
 
     set: function(value) {
@@ -23,7 +23,7 @@ Object.defineProperty((<any>Phaser.Text.prototype), '_text', {
 Object.defineProperty((<any>Phaser.BitmapText.prototype), '_text', {
 
     get: function() {
-        return i18next.t(this._nonTranslated);
+        return i18next.t(this._nonTranslated) || '';
     },
 
     set: function(value) {
