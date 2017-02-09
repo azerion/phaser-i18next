@@ -58,6 +58,10 @@ module.exports = function (grunt) {
                     'build/<%= pkg.config.name %>.js': [
                         'node_modules/i18next/i18next.js',
                         'build/<%= pkg.config.name %>.js'
+                    ],
+                    'build/<%= pkg.config.name %>.d.ts': [
+                        'vendor/i18next.d.ts',
+                        'build/<%= pkg.config.name %>.d.ts'
                     ]
                 }
             }

@@ -1,9 +1,9 @@
 /*!
- * phaser-i18next - version 0.1.0 
+ * phaser-i18next - version 0.1.1 
  * Phaser plugin for translations using i18next.
  *
  * OrangeGames
- * Build at 03-02-2017
+ * Build at 09-02-2017
  * Released under MIT License 
  */
 
@@ -2338,7 +2338,7 @@ var PhaserI18n;
 })(PhaserI18n || (PhaserI18n = {}));
 Object.defineProperty(Phaser.Text.prototype, '_text', {
     get: function () {
-        return i18next.t(this._nonTranslated);
+        return i18next.t(this._nonTranslated) || '';
     },
     set: function (value) {
         if (value !== this._nonTranslated) {
@@ -2348,7 +2348,7 @@ Object.defineProperty(Phaser.Text.prototype, '_text', {
 });
 Object.defineProperty(Phaser.BitmapText.prototype, '_text', {
     get: function () {
-        return i18next.t(this._nonTranslated);
+        return i18next.t(this._nonTranslated) || '';
     },
     set: function (value) {
         if (value !== this._nonTranslated) {
