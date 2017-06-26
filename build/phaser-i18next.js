@@ -1,9 +1,9 @@
 /*!
- * phaser-i18next - version 0.1.1 
+ * phaser-i18next - version 1.0.0 
  * Phaser plugin for translations using i18next.
  *
  * OrangeGames
- * Build at 09-02-2017
+ * Build at 26-06-2017
  * Released under MIT License 
  */
 
@@ -2336,26 +2336,6 @@ var PhaserI18n;
         I18next.Backend = Backend;
     })(I18next = PhaserI18n.I18next || (PhaserI18n.I18next = {}));
 })(PhaserI18n || (PhaserI18n = {}));
-Object.defineProperty(Phaser.Text.prototype, '_text', {
-    get: function () {
-        return i18next.t(this._nonTranslated) || '';
-    },
-    set: function (value) {
-        if (value !== this._nonTranslated) {
-            this._nonTranslated = value.toString() || '';
-        }
-    }
-});
-Object.defineProperty(Phaser.BitmapText.prototype, '_text', {
-    get: function () {
-        return i18next.t(this._nonTranslated) || '';
-    },
-    set: function (value) {
-        if (value !== this._nonTranslated) {
-            this._nonTranslated = value.toString() || '';
-        }
-    }
-});
 var PhaserI18n;
 (function (PhaserI18n) {
     var Plugin = (function (_super) {
@@ -2367,6 +2347,8 @@ var PhaserI18n;
                 value: _this
             });
             _this.addLocaleLoader();
+            _this.addLocaleFactory();
+            _this.addLocaleCreator();
             return _this;
         }
         Plugin.prototype.init = function (options) {
@@ -2411,8 +2393,104 @@ var PhaserI18n;
                 }
             };
         };
+        Plugin.prototype.addLocaleFactory = function () {
+            Phaser.GameObjectFactory.prototype.translatedText = function (x, y, text, style, interpolations, group) {
+                if (group === undefined) {
+                    group = this.world;
+                }
+                return group.add(new PhaserI18n.TranslatedText(this.game, x, y, text, style, interpolations));
+            };
+            Phaser.GameObjectFactory.prototype.translatedBitmapText = function (x, y, font, text, size, align, interpolations, group) {
+                if (group === undefined) {
+                    group = this.world;
+                }
+                return group.add(new PhaserI18n.TranslatedBitmapText(this.game, x, y, font, text, size, align, interpolations));
+            };
+        };
+        Plugin.prototype.addLocaleCreator = function () {
+            Phaser.GameObjectCreator.prototype.translatedText = function (x, y, text, style, interpolations) {
+                return new PhaserI18n.TranslatedText(this.game, x, y, text, style, interpolations);
+            };
+            Phaser.GameObjectCreator.prototype.translatedBitmapText = function (x, y, font, text, size, align, interpolations) {
+                return new PhaserI18n.TranslatedBitmapText(this.game, x, y, font, text, size, align, interpolations);
+            };
+        };
         return Plugin;
     }(Phaser.Plugin));
     PhaserI18n.Plugin = Plugin;
+})(PhaserI18n || (PhaserI18n = {}));
+var PhaserI18n;
+(function (PhaserI18n) {
+    var TranslatedBitmapText = (function (_super) {
+        __extends(TranslatedBitmapText, _super);
+        function TranslatedBitmapText(game, x, y, font, text, size, align, interpolations) {
+            var _this = _super.call(this, game, x, y, font, '', size, align) || this;
+            _this._nonTranslated = '';
+            _this._interpolations = {};
+            _this._interpolations = interpolations ? interpolations : {};
+            _this.text = text;
+            return _this;
+        }
+        TranslatedBitmapText.prototype.setTranslationParamameter = function (key, value) {
+            this._interpolations[key] = value;
+            this.dirty = true;
+        };
+        TranslatedBitmapText.prototype.clearTranslationParamameter = function (key) {
+            if (key in this._interpolations) {
+                delete this._interpolations[key];
+            }
+        };
+        Object.defineProperty(TranslatedBitmapText.prototype, "_text", {
+            get: function () {
+                return i18next.t(this._nonTranslated, this._interpolations) || '';
+            },
+            set: function (value) {
+                if (value !== this._nonTranslated) {
+                    this._nonTranslated = value.toString() || '';
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return TranslatedBitmapText;
+    }(Phaser.BitmapText));
+    PhaserI18n.TranslatedBitmapText = TranslatedBitmapText;
+})(PhaserI18n || (PhaserI18n = {}));
+var PhaserI18n;
+(function (PhaserI18n) {
+    var TranslatedText = (function (_super) {
+        __extends(TranslatedText, _super);
+        function TranslatedText(game, x, y, text, style, interpolations) {
+            var _this = _super.call(this, game, x, y, '', style) || this;
+            _this._nonTranslated = '';
+            _this._interpolations = {};
+            _this._interpolations = interpolations ? interpolations : {};
+            _this.text = text;
+            return _this;
+        }
+        TranslatedText.prototype.setTranslationParamameter = function (key, value) {
+            this._interpolations[key] = value;
+            this.dirty = true;
+        };
+        TranslatedText.prototype.clearTranslationParamameter = function (key) {
+            if (key in this._interpolations) {
+                delete this._interpolations[key];
+            }
+        };
+        Object.defineProperty(TranslatedText.prototype, "_text", {
+            get: function () {
+                return i18next.t(this._nonTranslated, this._interpolations) || '';
+            },
+            set: function (value) {
+                if (value !== this._nonTranslated) {
+                    this._nonTranslated = value.toString() || '';
+                }
+            },
+            enumerable: true,
+            configurable: true
+        });
+        return TranslatedText;
+    }(Phaser.Text));
+    PhaserI18n.TranslatedText = TranslatedText;
 })(PhaserI18n || (PhaserI18n = {}));
 //# sourceMappingURL=phaser-i18next.js.map

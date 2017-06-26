@@ -11,6 +11,8 @@ module PhaserI18n {
             });
 
             this.addLocaleLoader();
+            this.addLocaleFactory();
+            this.addLocaleCreator();
         }
 
         public init(options: i18n.Options, ...plugins: any[]) {
@@ -30,7 +32,7 @@ module PhaserI18n {
             this.recursiveUpdateText(this.game.stage);
         }
 
-        private  recursiveUpdateText(obj: Phaser.Text | Phaser.BitmapText | PIXI.DisplayObjectContainer): void {
+        private recursiveUpdateText(obj: Phaser.Text | Phaser.BitmapText | PIXI.DisplayObjectContainer): void {
             if (obj instanceof Phaser.Text || obj instanceof Phaser.BitmapText) {
                 (<any>obj).dirty = true;
             }
@@ -57,6 +59,26 @@ module PhaserI18n {
                 if (namespaces) {
                     i18next.loadNamespaces(namespaces);
                 }
+            };
+        }
+
+        private addLocaleFactory() {
+            (<PhaserI18n.LocaleObjectFactory>Phaser.GameObjectFactory.prototype).translatedText = function(x: number, y: number, text: string, style?: Phaser.PhaserTextStyle, interpolations?: any, group?: Phaser.Group) {
+                if (group === undefined) { group = this.world; }
+                return group.add(new PhaserI18n.TranslatedText(this.game, x, y, text, style, interpolations));
+            };
+            (<PhaserI18n.LocaleObjectFactory>Phaser.GameObjectFactory.prototype).translatedBitmapText = function(x: number, y: number, font: string, text?: string, size?: number, align?: string, interpolations?: any, group?: Phaser.Group) {
+                if (group === undefined) { group = this.world; }
+                return group.add(new PhaserI18n.TranslatedBitmapText(this.game, x, y, font, text, size, align, interpolations));
+            };
+        }
+
+        private addLocaleCreator() {
+            (<PhaserI18n.LocaleObjectCreator>Phaser.GameObjectCreator.prototype).translatedText = function(x: number, y: number, text: string, style?: Phaser.PhaserTextStyle, interpolations?: any) {
+                return new PhaserI18n.TranslatedText(this.game, x, y, text, style, interpolations);
+            };
+            (<PhaserI18n.LocaleObjectCreator>Phaser.GameObjectCreator.prototype).translatedBitmapText = function(x: number, y: number, font: string, text?: string, size?: number, align?: string, interpolations?: any) {
+                return new PhaserI18n.TranslatedBitmapText(this.game, x, y, font, text, size, align, interpolations);
             };
         }
     }

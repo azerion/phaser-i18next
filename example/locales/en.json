@@ -1,5 +1,5 @@
 {
   "Welcome to this awesome game!": "Welcome to this awesome game!",
-  "Cycle Languages": "Cycle Languages",
+  "Language": "Language: {{language}}",
   "Is this also translated?": "Is this also translated?"
 }

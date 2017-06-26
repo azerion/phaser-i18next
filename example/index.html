@@ -74,20 +74,22 @@
             game.add.image(0, 0, 'bg');
 
             //Oooe, there's a title here!
-            var login = game.add.text(game.width / 2, 100, 'Welcome to this awesome game!', {
+            var login = game.add.translatedText(game.width / 2, 100, 'Welcome to this awesome game!', {
                 font: '30px Arial',
                 fill: '#ffffff'
             });
             login.anchor.set(0.5);
 
             //Wauw, even bitmap text!
-            var bmt = game.add.bitmapText(game.width / 2, 250, 'desyrel', 'Is this also translated?', 64);
+            var bmt = game.add.translatedBitmapText(game.width / 2, 250, 'desyrel', 'Is this also translated?', 64);
             bmt.anchor.set(0.5);
 
             //Lets also add a button so we can switch the languages
             var submitBtn = game.add.nineSlice(game.width / 2, 360, 'btn', null, 200, 70);
-            var submit = game.add.text(game.width / 2, 380, 'Cycle Languages', {
+            var submit = game.add.translatedText(game.width / 2, 380, 'Language', {
                 font: '18px Arial'
+            }, {
+                language: 'en'
             });
             submit.anchor.set(0.5, 1.3);
             submitBtn.inputEnabled = true;
@@ -100,6 +102,7 @@
                 } else {
                     language = languages[idx + 1];
                 }
+                submit.setTranslationParamameter('language', language);
 
                 //And here we update the language, notice that texts all automagicly gets updated when you cycle trough the available languages
                 game.i18n.setLanguage(language);

@@ -1,5 +1,5 @@
 {
   "Welcome to this awesome game!": "Welkom op dit geweldige spel!",
-  "Cycle Languages": "Doorloop talen",
+  "Language": "Taal: {{language}}",
   "Is this also translated?": "Is dit ook vertaald?"
 }

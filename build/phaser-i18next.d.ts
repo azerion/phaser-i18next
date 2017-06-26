@@ -156,11 +156,20 @@ declare module PhaserI18n {
     }
 }
 declare module PhaserI18n {
+    interface LocaleObjectFactory extends Phaser.GameObjectFactory {
+        translatedText: (x: number, y: number, text: string, style?: Phaser.PhaserTextStyle, interpolations?: any, group?: Phaser.Group) => PhaserI18n.TranslatedText;
+        translatedBitmapText: (x: number, y: number, font: string, text?: string, size?: number, align?: string, interpolations?: any, group?: Phaser.Group) => PhaserI18n.TranslatedBitmapText;
+    }
+    interface LocaleObjectCreator extends Phaser.GameObjectCreator {
+        translatedText: (x: number, y: number, text: string, style?: Phaser.PhaserTextStyle, interpolations?: any) => PhaserI18n.TranslatedText;
+        translatedBitmapText: (x: number, y: number, font: string, text?: string, size?: number, align?: string, interpolations?: any) => PhaserI18n.TranslatedBitmapText;
+    }
     interface LocaleLoader extends Phaser.Loader {
         locale: (key: string[], url: string) => void;
     }
     interface LocalisedGame extends Phaser.Game {
         load: LocaleLoader;
+        add: LocaleObjectFactory;
     }
 }
 declare module PhaserI18n {
@@ -171,5 +180,27 @@ declare module PhaserI18n {
         setLanguage(language?: string): void;
         private recursiveUpdateText(obj);
         private addLocaleLoader();
+        private addLocaleFactory();
+        private addLocaleCreator();
+    }
+}
+declare module PhaserI18n {
+    class TranslatedBitmapText extends Phaser.BitmapText {
+        private _nonTranslated;
+        private _interpolations;
+        constructor(game: Phaser.Game, x: number, y: number, font: string, text?: string, size?: number, align?: string, interpolations?: any);
+        setTranslationParamameter(key: string, value: string): void;
+        clearTranslationParamameter(key: string): void;
+        private _text;
+    }
+}
+declare module PhaserI18n {
+    class TranslatedText extends Phaser.Text {
+        private _nonTranslated;
+        private _interpolations;
+        constructor(game: Phaser.Game, x: number, y: number, text: string, style?: Phaser.PhaserTextStyle, interpolations?: any);
+        setTranslationParamameter(key: string, value: string): void;
+        clearTranslationParamameter(key: string): void;
+        _text: string;
     }
 }

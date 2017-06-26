@@ -1,5 +1,5 @@
 {
   "Welcome to this awesome game!": "Willkommen zu diesem fantastischen Spiel!",
-  "Cycle Languages": "Zyklus Sprachen",
+  "Language": "Sprache: {{language}}",
   "Is this also translated?": "Wird das auch ubersetzt?"
 }
