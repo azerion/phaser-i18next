@@ -149,6 +149,7 @@ declare module PhaserI18n {
             private game;
             constructor(game: Phaser.Game);
             init(services: any, options?: i18n.BackendOptions): void;
+            setLoadPath(loadPath: string): void;
             read(language: string, namespace?: string, callback?: (err: any, data: any) => void): void;
             readMulti(languages: string, namespaces: string[], callback: (err: any, data: any) => void): void;
             create(languages: string[], namespace: string, key: string, fallbackValue: string): void;
@@ -175,6 +176,7 @@ declare module PhaserI18n {
 declare module PhaserI18n {
     class Plugin extends Phaser.Plugin {
         private _language;
+        private backend;
         constructor(game: Phaser.Game, parent: Phaser.PluginManager);
         init(options: i18n.Options, ...plugins: any[]): void;
         setLanguage(language?: string): void;

@@ -29,8 +29,12 @@ module PhaserI18n {
                 this.services = services;
 
                 if (options && options.loadPath) {
-                    this.loadPath = options.loadPath;
+                    this.setLoadPath(options.loadPath);
                 }
+            }
+
+            public setLoadPath(loadPath: string) {
+                this.loadPath = loadPath;
             }
 
             /**
