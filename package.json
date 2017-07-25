@@ -1,7 +1,7 @@
 {
   "name": "@orange-games/phaser-i18next",
   "author": "OrangeGames",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Phaser plugin for translations using i18next.",
   "contributors": [
     {
@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git@github.com:orange-games/phaser-i18next.git"
   },
-  "licenses": [
+  "license": [
     {
       "type": "MIT",
       "url": "https://github.com/orange-games/phaser-i18next/raw/master/LICENSE"
@@ -37,6 +37,6 @@
     "typescript": "2.1.x"
   },
   "dependencies": {
-    "i18next": "^6.1.2"
+    "i18next": "^8.4.3"
   }
 }

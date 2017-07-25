@@ -9,7 +9,7 @@
 
     <!-- Include Phaser Responsiveness JS -->
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/phaser/2.6.2/phaser.min.js"></script>
-    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/1.0.1/i18nextBrowserLanguageDetector.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/2.0.0/i18nextBrowserLanguageDetector.min.js"></script>
     <script type="text/javascript" src="//cnd.fbrq.io/phaser-nineslice/v2.0.0/phaser-nineslice.min.js"></script>
 
     <script type="text/javascript" src="//cnd.fbrq.io/phaser-i18next/phaser-i18next.min.js"></script>
@@ -28,11 +28,11 @@
 
     <!-- Game we want to track -->
     <script type="text/javascript">
-        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { create: create, preload: preload}, true);
-        var languages = ['en', 'de', 'nl'];
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { init: init, create: create, preload: preload}, true);
+        var languages = ['de', 'en', 'nl'];
         var language = languages[1];
 
-        Phaser.Device.whenReady(function () {
+        function init () {
             game.plugins.add(PhaserNineSlice.Plugin);
 
             //Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
@@ -40,12 +40,15 @@
                     //Configure the language we fall back to (defaults to 'dev')
                     fallbackLng: 'en',
                     debug: true,
-                    load: 'languageOnly'
+                    load: 'languageOnly',
+                    detection: {
+                        order: ['navigator']
+                    }
                 },
                 //From here we can add any i18next plugin we'd like to use
                 window.i18nextBrowserLanguageDetector
             );
-        });
+        }
 
         function preload() {
             game.load.image('bg', 'images/bg.png');

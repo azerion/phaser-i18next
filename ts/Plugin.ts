@@ -3,6 +3,8 @@ module PhaserI18n {
 
         private _language: string = 'en';
 
+        private backend: I18next.Backend;
+
         constructor(game: Phaser.Game, parent: Phaser.PluginManager) {
             super(game, parent);
 
@@ -16,20 +18,25 @@ module PhaserI18n {
         }
 
         public init(options: i18n.Options, ...plugins: any[]) {
+            i18next.on('languageChanged', () => {
+                this.recursiveUpdateText(this.game.stage);
+            });
+
+            this.backend = new I18next.Backend(this.game);
             //Initilize with language
-            i18next.use(new I18next.Backend(this.game));
+            i18next.use(this.backend);
 
             for (let i: number = 0; i < plugins.length; i++) {
                 i18next.use(plugins[i]);
             }
 
-            i18next.init(options);
+            i18next.init(options, () => {
+                this.recursiveUpdateText(this.game.stage);
+            });
         }
 
         public setLanguage(language: string = 'en') {
             i18next.changeLanguage(language);
-
-            this.recursiveUpdateText(this.game.stage);
         }
 
         private recursiveUpdateText(obj: Phaser.Text | Phaser.BitmapText | PIXI.DisplayObjectContainer): void {
@@ -45,16 +52,11 @@ module PhaserI18n {
         }
 
         private addLocaleLoader() {
+            var self: this = this;
             (<PhaserI18n.LocaleLoader>Phaser.Loader.prototype).locale = function (key: string[], loadPath: string, namespaces?: string[]) {
-                i18next.init(<i18n.Options>{
-                    backend: {
-                        loadPath: loadPath
-                    }
-                });
+                self.backend.setLoadPath(loadPath);
 
-                i18next.loadLanguages(key, () => {
-                    i18next.changeLanguage(key[0]);
-                });
+                i18next.loadLanguages(key);
 
                 if (namespaces) {
                     i18next.loadNamespaces(namespaces);
