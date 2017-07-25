@@ -1,5 +1,5 @@
 /*!
- * phaser-i18next - version 1.0.1 
+ * phaser-i18next - version 1.0.2 
  * Phaser plugin for translations using i18next.
  *
  * OrangeGames
@@ -2293,7 +2293,10 @@ var PhaserI18n;
             var self = this;
             Phaser.Loader.prototype.locale = function (key, loadPath, namespaces) {
                 self.backend.setLoadPath(loadPath);
-                i18next.loadLanguages(key);
+                self.game.load.resetLocked = true;
+                i18next.loadLanguages(key, function () {
+                    self.game.load.resetLocked = false;
+                });
                 if (namespaces) {
                     i18next.loadNamespaces(namespaces);
                 }

@@ -56,7 +56,11 @@ module PhaserI18n {
             (<PhaserI18n.LocaleLoader>Phaser.Loader.prototype).locale = function (key: string[], loadPath: string, namespaces?: string[]) {
                 self.backend.setLoadPath(loadPath);
 
-                i18next.loadLanguages(key);
+                //Fix for game Phaser's loader beeing reset across states
+                self.game.load.resetLocked = true;
+                i18next.loadLanguages(key, () => {
+                    self.game.load.resetLocked = false;
+                });
 
                 if (namespaces) {
                     i18next.loadNamespaces(namespaces);
