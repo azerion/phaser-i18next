@@ -177,6 +177,8 @@ declare module PhaserI18n {
     class Plugin extends Phaser.Plugin {
         private _language;
         private backend;
+        private wasLoaderLocked;
+        private started;
         constructor(game: Phaser.Game, parent: Phaser.PluginManager);
         init(options: i18n.Options, ...plugins: any[]): void;
         setLanguage(language?: string): void;
