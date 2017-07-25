@@ -12,8 +12,8 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/2.0.0/i18nextBrowserLanguageDetector.min.js"></script>
     <script type="text/javascript" src="//cnd.fbrq.io/phaser-nineslice/v2.0.0/phaser-nineslice.min.js"></script>
 
-    <script type="text/javascript" src="//cnd.fbrq.io/phaser-i18next/phaser-i18next.min.js"></script>
-    <!--<script type="text/javascript" src="./phaser-i18next.js"></script>-->
+    <!--<script type="text/javascript" src="//cnd.fbrq.io/phaser-i18next/phaser-i18next.min.js"></script>-->
+    <script type="text/javascript" src="./phaser-i18next.js"></script>
     <style type="text/css">
         body {
             margin: 0;
@@ -28,19 +28,23 @@
 
     <!-- Game we want to track -->
     <script type="text/javascript">
-        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { init: init, create: create, preload: preload}, true);
         var languages = ['de', 'en', 'nl'];
         var language = languages[1];
 
-        function init () {
+        var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { create: function () {
             game.plugins.add(PhaserNineSlice.Plugin);
-
+            console.log('plugin added');
             //Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
             game.plugins.add(PhaserI18n.Plugin, {
                     //Configure the language we fall back to (defaults to 'dev')
                     fallbackLng: 'en',
                     debug: true,
                     load: 'languageOnly',
+                    backend: {
+                        //The path from which we can load the translations, by default this path also includes the translation namespace
+                        //But since we only have one namespace, we skip this for now.
+                        loadPath: 'locales/{{lng}}.json'
+                    },
                     detection: {
                         order: ['navigator']
                     }
@@ -48,24 +52,26 @@
                 //From here we can add any i18next plugin we'd like to use
                 window.i18nextBrowserLanguageDetector
             );
-        }
+
+            setTimeout(function () {
+                game.state.start('game')
+            }, 5000);
+        }}, true);
+
+        game.state.add('game', { create: create, preload: preload})
 
         function preload() {
-            game.load.image('bg', 'images/bg.png');
-            game.load.nineSlice('btn', 'images/btn_clean.png', 20, 23, 27, 28);
-            game.load.bitmapFont('desyrel', 'bitmapfont/desyrel.png', 'bitmapfont/desyrel.xml');
-
-
             //And here we preload all locales for our game
             game.load.locale(
                 //all the languages we support: (en, de, nl)
                 languages,
-                //The path from which we can load the translations, by default this path also includes the translation namespace
-                //But since we only have one namespace, we skip this for now.
-                'locales/{{lng}}.json',
                 //The namespaces on which the translations are handled, defaults to ['translation']
                 ['translation']
             );
+
+            game.load.image('bg', 'images/bg.png');
+            game.load.nineSlice('btn', 'images/btn_clean.png', 20, 23, 27, 28);
+            game.load.bitmapFont('desyrel', 'bitmapfont/desyrel.png', 'bitmapfont/desyrel.xml');
         }
 
         function create() {

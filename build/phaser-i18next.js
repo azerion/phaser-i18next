@@ -1,5 +1,5 @@
 /*!
- * phaser-i18next - version 1.0.1 
+ * phaser-i18next - version 1.0.2 
  * Phaser plugin for translations using i18next.
  *
  * OrangeGames
@@ -2248,6 +2248,8 @@ var PhaserI18n;
         function Plugin(game, parent) {
             var _this = _super.call(this, game, parent) || this;
             _this._language = 'en';
+            _this.wasLoaderLocked = false;
+            _this.started = false;
             Object.defineProperty(game, 'i18n', {
                 value: _this
             });
@@ -2262,6 +2264,8 @@ var PhaserI18n;
             for (var _i = 1; _i < arguments.length; _i++) {
                 plugins[_i - 1] = arguments[_i];
             }
+            this.wasLoaderLocked = this.game.load.resetLocked;
+            this.game.load.resetLocked = true;
             i18next.on('languageChanged', function () {
                 _this.recursiveUpdateText(_this.game.stage);
             });
@@ -2292,8 +2296,20 @@ var PhaserI18n;
         Plugin.prototype.addLocaleLoader = function () {
             var self = this;
             Phaser.Loader.prototype.locale = function (key, loadPath, namespaces) {
-                self.backend.setLoadPath(loadPath);
-                i18next.loadLanguages(key);
+                var _this = this;
+                if (Array.isArray(loadPath)) {
+                    namespaces = loadPath;
+                }
+                else {
+                    self.backend.setLoadPath(loadPath);
+                    console.warn('Using loadPath trough load.locale is deprecated, please set it as part of the Plugin config instead!');
+                }
+                i18next.loadLanguages(key, function () {
+                    if (!self.started) {
+                        self.started = true;
+                        _this.game.load.resetLocked = self.wasLoaderLocked;
+                    }
+                });
                 if (namespaces) {
                     i18next.loadNamespaces(namespaces);
                 }

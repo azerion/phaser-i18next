@@ -5,6 +5,9 @@ module PhaserI18n {
 
         private backend: I18next.Backend;
 
+        private wasLoaderLocked: boolean = false;
+        private started: boolean = false;
+
         constructor(game: Phaser.Game, parent: Phaser.PluginManager) {
             super(game, parent);
 
@@ -18,6 +21,10 @@ module PhaserI18n {
         }
 
         public init(options: i18n.Options, ...plugins: any[]) {
+            //Pausing Phaser's loader beeing reset across states until we have loaded the languages
+            this.wasLoaderLocked = this.game.load.resetLocked;
+            this.game.load.resetLocked = true;
+
             i18next.on('languageChanged', () => {
                 this.recursiveUpdateText(this.game.stage);
             });
@@ -53,10 +60,21 @@ module PhaserI18n {
 
         private addLocaleLoader() {
             var self: this = this;
-            (<PhaserI18n.LocaleLoader>Phaser.Loader.prototype).locale = function (key: string[], loadPath: string, namespaces?: string[]) {
-                self.backend.setLoadPath(loadPath);
-
-                i18next.loadLanguages(key);
+            (<PhaserI18n.LocaleLoader>Phaser.Loader.prototype).locale = function (key: string[], loadPath?: string | string[], namespaces?: string[]) {
+                if (Array.isArray(loadPath)) {
+                    namespaces = loadPath;
+                } else {
+                    self.backend.setLoadPath(loadPath);
+                    console.warn('Using loadPath trough load.locale is deprecated, please set it as part of the Plugin config instead!');
+                }
+                // console.log('loading translations!');
+                i18next.loadLanguages(key, () => {
+                    if (!self.started) {
+                        self.started = true;
+                        this.game.load.resetLocked = self.wasLoaderLocked;
+                    }
+                    // console.log('translations loaded!!');
+                });
 
                 if (namespaces) {
                     i18next.loadNamespaces(namespaces);

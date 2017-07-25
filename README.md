@@ -27,9 +27,16 @@ After adding the script to the page you can activate it by enabling the plugin:
 ```javascript
 //Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
 game.plugins.add(PhaserI18n.Plugin, {
-    fallbackLng: 'en'
+    fallbackLng: 'en',
+    backend: {
+        //The path from which we can load the translations, by default this path also includes the translation namespace
+        //But since we only have one namespace, we skip this for now.
+        loadPath: '/locales/{{lng}}.json'
+    }
 });
 ```
+Please note that the backend config in the above example is required for the correct working of i18next with Phaser.
+The loadPath itself can be anything you want as per i18next documentation, but it's required to be set!
 
 Usage
 -----
@@ -39,9 +46,6 @@ First up, you need to preload the languages you wish to have in the game.
 game.load.locale(
     //all the languages we support: (en, de, nl)
     languages,
-    //The path from which we can load the translations, by default this path also includes the translation namespace
-    //But since we only have one namespace, we skip this for now.
-    '/locales/{{lng}}.json',
     //The namespaces on which the translations are handled, defaults to ['translation']
     ['translation']
 );
@@ -71,11 +75,6 @@ But when you start with bigger games and more translations (and translation name
 
 Two of those service you could use are [locize](https://locize.com/) and/or [Poeditor](https://poeditor.com). Both these services allow you to online edit key value JSON translations that are used in i18next.
 The advantage of using suchs tools is that it's easier to allow external people work on your translations and they aggragate the statistics of your projects (translation completion, languages managed, etc.) 
-
-Todo
-----
-* Expose more powerfull feature of i18next
-* Extend documentation
 
 Disclaimer
 ----------
