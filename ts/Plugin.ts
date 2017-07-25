@@ -64,6 +64,7 @@ module PhaserI18n {
                 if (Array.isArray(loadPath)) {
                     namespaces = loadPath;
                 } else {
+                    self.backend.setLoadPath(loadPath);
                     console.warn('Using loadPath trough load.locale is deprecated, please set it as part of the Plugin config instead!');
                 }
                 // console.log('loading translations!');

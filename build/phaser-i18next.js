@@ -2301,6 +2301,7 @@ var PhaserI18n;
                     namespaces = loadPath;
                 }
                 else {
+                    self.backend.setLoadPath(loadPath);
                     console.warn('Using loadPath trough load.locale is deprecated, please set it as part of the Plugin config instead!');
                 }
                 i18next.loadLanguages(key, function () {
