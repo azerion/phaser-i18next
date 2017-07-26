@@ -1,9 +1,9 @@
 /*!
- * phaser-i18next - version 1.0.2 
+ * phaser-i18next - version 1.0.3 
  * Phaser plugin for translations using i18next.
  *
  * OrangeGames
- * Build at 25-07-2017
+ * Build at 26-07-2017
  * Released under MIT License 
  */
 
@@ -2300,7 +2300,7 @@ var PhaserI18n;
                 if (Array.isArray(loadPath)) {
                     namespaces = loadPath;
                 }
-                else {
+                else if (typeof loadPath !== 'undefined') {
                     self.backend.setLoadPath(loadPath);
                     console.warn('Using loadPath trough load.locale is deprecated, please set it as part of the Plugin config instead!');
                 }
