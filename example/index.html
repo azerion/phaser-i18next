@@ -12,8 +12,8 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/i18next-browser-languagedetector/2.0.0/i18nextBrowserLanguageDetector.min.js"></script>
     <script type="text/javascript" src="//cnd.fbrq.io/phaser-nineslice/v2.0.0/phaser-nineslice.min.js"></script>
 
-    <!--<script type="text/javascript" src="//cnd.fbrq.io/phaser-i18next/phaser-i18next.min.js"></script>-->
-    <script type="text/javascript" src="./phaser-i18next.js"></script>
+    <script type="text/javascript" src="//cnd.fbrq.io/phaser-i18next/phaser-i18next.min.js"></script>
+    <!--<script type="text/javascript" src="./phaser-i18next.js"></script>-->
     <style type="text/css">
         body {
             margin: 0;
@@ -55,7 +55,7 @@
 
             setTimeout(function () {
                 game.state.start('game')
-            }, 5000);
+            }, 1000);
         }}, true);
 
         game.state.add('game', { create: create, preload: preload})

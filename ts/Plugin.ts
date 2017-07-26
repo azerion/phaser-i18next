@@ -63,7 +63,7 @@ module PhaserI18n {
             (<PhaserI18n.LocaleLoader>Phaser.Loader.prototype).locale = function (key: string[], loadPath?: string | string[], namespaces?: string[]) {
                 if (Array.isArray(loadPath)) {
                     namespaces = loadPath;
-                } else {
+                } else if (typeof loadPath !== 'undefined') {
                     self.backend.setLoadPath(loadPath);
                     console.warn('Using loadPath trough load.locale is deprecated, please set it as part of the Plugin config instead!');
                 }
