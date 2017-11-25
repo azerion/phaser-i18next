@@ -1,6 +1,6 @@
 Phaser i18next
 ==============
-Phaser i18next is a plugin for Phaser that allows you to have seamless translations in your game. It uses [i18next](https://github.com/i18next/i18next) as it's source for translations management, which is widely adopted by the JS community in other projects as well.
+Phaser i18next is a plugin for [Phaser](http://phaser.io/) that allows you to have seamless translations in your game. It uses [i18next](https://github.com/i18next/i18next) as it's source for translations management, which is widely adopted by the JS community in other projects as well.
 
 Key features:
 * Support for translations namespaces
