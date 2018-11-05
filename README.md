@@ -74,7 +74,7 @@ When you're all done and set up for translations and have your key value file, n
 But when you start with bigger games and more translations (and translation namespaces) you want to manage your translations better, and maybe even use external translator services.
 
 Two of those service you could use are [locize](https://locize.com/) and/or [Poeditor](https://poeditor.com). Both these services allow you to online edit key value JSON translations that are used in i18next.
-The advantage of using suchs tools is that it's easier to allow external people work on your translations and they aggragate the statistics of your projects (translation completion, languages managed, etc.) 
+The advantage of using such tools is that it's easier to allow external people work on your translations and they aggregate the statistics of your projects (translation completion, languages managed, etc.) 
 
 Disclaimer
 ----------
