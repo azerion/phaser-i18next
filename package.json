@@ -1,29 +1,29 @@
 {
-  "name": "@orange-games/phaser-i18next",
-  "author": "OrangeGames",
+  "name": "@azerion/phaser-i18next",
+  "author": "Azerion",
   "version": "1.0.3",
   "description": "Phaser plugin for translations using i18next.",
   "contributors": [
     {
       "name": "Ale Bles",
-      "email": "a.bles@orangegames.com"
+      "email": "a.bles@azerion.com"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "git@github.com:orange-games/phaser-i18next.git"
+    "url": "git@github.com:azerion/phaser-i18next.git"
   },
   "license": [
     {
       "type": "MIT",
-      "url": "https://github.com/orange-games/phaser-i18next/raw/master/LICENSE"
+      "url": "https://github.com/azerion/phaser-i18next/raw/master/LICENSE"
     }
   ],
   "config": {
     "name": "phaser-i18next"
   },
   "devDependencies": {
-    "@orange-games/phaser-nineslice": "^2.0.0",
+    "@azerion/phaser-nineslice": "^2.0.1",
     "@types/i18next": "^2.3.35",
     "grunt": "1.0.x",
     "grunt-banner": "^0.6.0",
