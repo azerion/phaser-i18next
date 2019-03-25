@@ -12,13 +12,13 @@ Getting Started
 ---------------
 First you want to get a fresh copy of the plugin. You can get it from this repo or from npm, ain't that handy.
 ```
-npm install @orange-games/phaser-i18next --save-dev
+npm install @azerion/phaser-i18next --save-dev
 ```
 
 Next up you'd want to add it to your list of js sources you load into your game
 ```html
 //Local installed version
-<script src="node_modules/@orange-games/phaser-i18next/build/phaser-i18next.js"></script>
+<script src="node_modules/@azerion/phaser-i18next/build/phaser-i18next.js"></script>
 //Or use our cdn:
 <script src="//cdn.fbrq.io/phaser-i18next/v0.0.1/phaser-i18next.min.js"></script>
 ```
@@ -78,6 +78,6 @@ The advantage of using such tools is that it's easier to allow external people w
 
 Disclaimer
 ----------
-We at OrangeGames just love playing and creating awesome games. We aren't affiliated with Phaser.io or i18next. We just needed some awesome translations in our awesome HTML5 games. Feel free to use it for enhancing your own awesome games!
+We at Azerion just love playing and creating awesome games. We aren't affiliated with Phaser.io or i18next. We just needed some awesome translations in our awesome HTML5 games. Feel free to use it for enhancing your own awesome games!
 
 Phaser i18next is distributed under the MIT license. All 3rd party libraries and components are distributed under their respective license terms.

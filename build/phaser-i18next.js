@@ -2,8 +2,8 @@
  * phaser-i18next - version 1.0.3 
  * Phaser plugin for translations using i18next.
  *
- * OrangeGames
- * Build at 26-07-2017
+ * Azerion
+ * Build at 15-03-2019
  * Released under MIT License 
  */
 
@@ -2190,16 +2190,11 @@ return i18next;
 
 })));
 
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 var PhaserI18n;
 (function (PhaserI18n) {
     var I18next;
