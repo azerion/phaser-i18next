@@ -11,11 +11,13 @@ Key features:
 Getting Started
 ---------------
 First you want to get a fresh copy of the plugin. You can get it from this repo or from npm, ain't that handy.
-```
+
+```console
 npm install @azerion/phaser-i18next --save-dev
 ```
 
 Next up you'd want to add it to your list of js sources you load into your game
+
 ```html
 //Local installed version
 <script src="node_modules/@azerion/phaser-i18next/build/phaser-i18next.js"></script>
@@ -24,6 +26,7 @@ Next up you'd want to add it to your list of js sources you load into your game
 ```
 
 After adding the script to the page you can activate it by enabling the plugin:
+
 ```javascript
 // Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
 game.plugins.add(PhaserI18n.Plugin, {
@@ -35,12 +38,14 @@ game.plugins.add(PhaserI18n.Plugin, {
     }
 });
 ```
+
 Please note that the backend config in the above example is required for the correct working of i18next with Phaser.
 The loadPath itself can be anything you want as per i18next documentation, but it's required to be set!
 
 Usage
 -----
 First up, you need to preload the languages you wish to have in the game.
+
 ```javascript
 // Here we preload all the locales for our game.
 game.load.locale(
@@ -55,17 +60,18 @@ i18next plugins
 ---------------
 i18next has a very nice set of [plugins](http://i18next.com/docs/ecosystem/) you can use in order to enhance your i18n experience. You can still leverage the power of these plugins by passing them when you load this Phaser Plugin. All features should work out of the box.
 You can pass an indefinite amount of plugins to the plugin constructor, just be mindfull that the first argument should be the i18n config:
+
 ```javascript
-            //Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
-            game.plugins.add(PhaserI18n.Plugin, {
-                    //Configure the language we fall back to (defaults to 'dev')
-                    fallbackLng: 'en',
-                    debug: true,
-                    load: 'languageOnly'
-                },
-                //From here we can add any i18next plugin we'd like to use, new plugins can be added comma-seperated
-                window.i18nextBrowserLanguageDetector
-            );
+//Load the plugin with the options, for more details on all possible options, see: http://i18next.github.io/i18next/pages/doc_init.html
+game.plugins.add(PhaserI18n.Plugin, {
+        //Configure the language we fall back to (defaults to 'dev')
+        fallbackLng: 'en',
+        debug: true,
+        load: 'languageOnly'
+    },
+    //From here we can add any i18next plugin we'd like to use, new plugins can be added comma-seperated
+    window.i18nextBrowserLanguageDetector
+);
 ```
 
 Manage translations
@@ -73,7 +79,13 @@ Manage translations
 When you're all done and set up for translations and have your key value file, next up is starting to translate them. For smaller games this is fairly simple and still manageable by editing your translations in a text file.
 But when you start with bigger games and more translations (and translation namespaces) you want to manage your translations better and maybe even use external translator services.
 
-Two of those service you could use are [locize](https://locize.com/) and/or [Poeditor](https://poeditor.com). Both these services allow you to online edit key value JSON translations that are used in i18next.
+Here is an example of Localization Management Services:
+- [Crowdin](https://crowdin.com/) - cloud-based solution that streamlines localization management for your team. Also, there is an integration with the  i18next library that allows [content delivery Over-The-Air](https://github.com/crowdin/ota-client-js/wiki/Example-of-usage-with-the-i18next-library).
+- [locize](https://locize.com/) - The pay-per-use continuous localization management platform.
+- [Poeditor](https://poeditor.com) - Translate your app, website, game or other software in a team or independently using a friendly yet powerful online solution.
+
+These services allow you to online edit key value JSON translations that are used in i18next.
+
 The advantage of using such tools is that it's easier to allow external people work on your translations and they aggregate the statistics of your projects (translation completion, languages managed, etc.) 
 
 Disclaimer
